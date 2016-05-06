@@ -2,4 +2,5 @@
     <string name="app_name">Meine App 2</string>
     <string name="edit_message">Schreibe eine Nachricht</string>
     <string name="button_send">Senden</string>
+    <string name="the_time">Es ist jetzt:</string>
 </resources>
