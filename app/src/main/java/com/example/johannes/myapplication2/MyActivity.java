@@ -1,19 +1,51 @@
 package com.example.johannes.myapplication2;
 
+import android.content.Context;
 import android.content.Intent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
+
+import java.util.ArrayList;
+
+class SentencesAdapter extends ArrayAdapter<String> {
+    public SentencesAdapter(Context context) {
+        super(context, R.layout.list_item);
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        // Get the data item for this position
+        String sentence = getItem(position);
+        // Check if an existing view is being reused, otherwise inflate the view
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_item, parent, false);
+        }
+        // Lookup view for data population
+        TextView tvsentence = (TextView) convertView.findViewById(R.id.list_sentence);
+        TextView tvbutton = (TextView) convertView.findViewById(R.id.list_button_speak);
+        // Populate the data into the template view using the data object
+        tvsentence.setText(sentence);
+        tvbutton.setTag(sentence);
+        // Return the completed view to render on screen
+        return convertView;
+    }
+}
 
 public class MyActivity extends AppCompatActivity {
 
     public final static String EXTRA_MESSAGE = "com.example.johannes.myapplication2.MESSAGE";
 
-    ArrayAdapter<String> adapter;
+    SentencesAdapter adapter;
     TextToSpeech tts;
 
     @Override
@@ -21,7 +53,7 @@ public class MyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my);
 
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+        adapter = new SentencesAdapter(this);
 
         ListView listview = (ListView) findViewById(R.id.message_list);
         listview.setAdapter(adapter);
@@ -35,18 +67,19 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
-
         adapter.add(message);
     }
 
     public void speakMessage(View view) {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         tts.speak(editText.getText().toString(), TextToSpeech.QUEUE_ADD, null);
+    }
+
+    public void speakMessageFromList(View view) {
+        String message = view.getTag().toString();
+        tts.speak(message, TextToSpeech.QUEUE_ADD, null);
     }
 
     public void onDestroy() {
