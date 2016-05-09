@@ -15,6 +15,11 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 class SentencesAdapter extends ArrayAdapter<String> {
@@ -54,6 +59,7 @@ public class MyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my);
 
         adapter = new SentencesAdapter(this);
+        readData();
 
         ListView listview = (ListView) findViewById(R.id.message_list);
         listview.setAdapter(adapter);
@@ -80,6 +86,43 @@ public class MyActivity extends AppCompatActivity {
     public void speakMessageFromList(View view) {
         String message = view.getTag().toString();
         tts.speak(message, TextToSpeech.QUEUE_ADD, null);
+    }
+
+    void readData() {
+
+        File f = new File(this.getFilesDir(), getString(R.string.user_sentences_file));
+
+        BufferedReader reader;
+        try {
+            reader = new BufferedReader(new FileReader(f));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                adapter.add(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    void saveData() {
+
+        File file = new File(this.getFilesDir(), getString(R.string.user_sentences_file));
+
+        try {
+            PrintWriter writer = new PrintWriter(file);
+            for(int i=0 ; i<adapter.getCount() ; i++){
+                String current_sentence = adapter.getItem(i);
+                writer.println(current_sentence);
+            }
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void onStop() {
+        super.onStop();
+        saveData();
     }
 
     public void onDestroy() {
