@@ -38,9 +38,11 @@ class SentencesAdapter extends ArrayAdapter<String> {
         // Lookup view for data population
         TextView tvsentence = (TextView) convertView.findViewById(R.id.list_sentence);
         TextView tvbutton = (TextView) convertView.findViewById(R.id.list_button_speak);
+        TextView tvbutton_delete = (TextView) convertView.findViewById(R.id.list_button_delete);
         // Populate the data into the template view using the data object
         tvsentence.setText(sentence);
-        tvbutton.setTag(sentence);
+        tvbutton.setTag(position);
+        tvbutton_delete.setTag(position);
         // Return the completed view to render on screen
         return convertView;
     }
@@ -84,8 +86,15 @@ public class MyActivity extends AppCompatActivity {
     }
 
     public void speakMessageFromList(View view) {
-        String message = view.getTag().toString();
+        int position = Integer.parseInt(view.getTag().toString());
+        String message = adapter.getItem(position);
         tts.speak(message, TextToSpeech.QUEUE_ADD, null);
+    }
+
+    public void deleteMessageFromList(View view) {
+        int position = Integer.parseInt(view.getTag().toString());
+        String message = adapter.getItem(position);
+        adapter.remove(message);
     }
 
     void readData() {

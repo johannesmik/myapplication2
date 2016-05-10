@@ -4,5 +4,6 @@
     <string name="button_send">Send</string>
     <string name="the_time">The time is:</string>
     <string name="button_speak">Speak</string>
+    <string name="button_delete">Delete</string>
     <string name="user_sentences_file">user_sentences</string>
 </resources>
