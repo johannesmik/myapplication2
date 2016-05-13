@@ -15,7 +15,7 @@
     </string-array>
     <string-array name="pref_language_values">
         <item>de</item>
-        <item>jp</item>
+        <item>ja</item>
     </string-array>
     <string name="pref_language_values_default">de</string>
 </resources>
