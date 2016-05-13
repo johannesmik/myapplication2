@@ -2,6 +2,8 @@ package com.example.johannes.myapplication2;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Locale;
 
 class SentencesAdapter extends ArrayAdapter<String> {
     public SentencesAdapter(Context context) {
@@ -100,17 +103,36 @@ public class MyActivity extends AppCompatActivity {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         String message = editText.getText().toString();
         adapter.add(message);
+
+        // Speak message (only if corresponding setting is set)
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        Boolean speak_as_send = sharedPref.getBoolean("pref_speak_as_send", false);
+
+        if (speak_as_send) {
+            speak(message);
+        }
+
+    }
+
+    public void speak(String message) {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        String language = sharedPref.getString("pref_language", "");
+
+        Locale locale = new Locale(language);
+        tts.setLanguage(locale);
+
+        tts.speak(message, TextToSpeech.QUEUE_ADD, null);
     }
 
     public void speakMessage(View view) {
         EditText editText = (EditText) findViewById(R.id.edit_message);
-        tts.speak(editText.getText().toString(), TextToSpeech.QUEUE_ADD, null);
+        speak(editText.getText().toString());
     }
 
     public void speakMessageFromList(View view) {
         int position = Integer.parseInt(view.getTag().toString());
         String message = adapter.getItem(position);
-        tts.speak(message, TextToSpeech.QUEUE_ADD, null);
+        speak(message);
     }
 
     public void deleteMessageFromList(View view) {
