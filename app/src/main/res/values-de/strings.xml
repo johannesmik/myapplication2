@@ -1,8 +1,18 @@
 <resources>
-    <string name="app_name">Meine App 2</string>
+    <string name="app_name">Sprich für mich</string>
     <string name="edit_message">Schreibe eine Nachricht</string>
-    <string name="button_send">Senden</string>
+    <string name="button_send">Speicher in Liste</string>
     <string name="the_time">Es ist jetzt:</string>
     <string name="button_speak">Sprechen</string>
     <string name="button_delete">Löschen</string>
+    <string name="pref_language_title">Sprachen</string>
+    <string name="pref_speak_as_send">Sprechen beim Speichern</string>
+    <string name="pref_speak_as_send_summ">Spricht die Nachricht wenn sie in die Liste gespeichert wird.</string>
+    <string-array name="pref_language">
+        <item>Deutsch</item>
+        <item>Japanisch</item>
+    </string-array>
+    <string name="pref_language_values_default">de</string>
+    <string name="user_sentences_file">user_sentences</string>
+    <string name="settings_title">Einstellungen</string>
 </resources>

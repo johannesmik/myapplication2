@@ -1,14 +1,15 @@
 <resources>
-    <string name="app_name">My Application 2</string>
+    <string name="app_name">Speak For Me</string>
     <string name="edit_message">Enter a message</string>
-    <string name="button_send">Send</string>
+    <string name="button_send">Save to List</string>
     <string name="the_time">The time is:</string>
     <string name="button_speak">Speak</string>
     <string name="button_delete">Delete</string>
     <string name="user_sentences_file">user_sentences</string>
     <string name="pref_speak_as_send">Speak as Send</string>
-    <string name="pref_speak_as_send_summ">Speak the message out loud when saving message to the list</string>
+    <string name="pref_speak_as_send_summ">Speak the message out loud when saving message to the list.</string>
     <string name="pref_language_title">Languages</string>
+    <string name="settings_title">Settings</string>
     <string-array name="pref_language">
         <item>German</item>
         <item>Japanese</item>

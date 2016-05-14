@@ -6,7 +6,7 @@
         ic_menu_preferences=""
         android:orderInCategory="100"
         android:showAsAction="never"
-        android:title="123 Test"
+        android:title="@string/settings_title"
         android:icon="@android:drawable/ic_menu_preferences"/>
 
 </menu>

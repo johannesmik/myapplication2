@@ -1,4 +1,4 @@
-package com.example.johannes.myapplication2;
+package com.example.johannes.speakforme;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

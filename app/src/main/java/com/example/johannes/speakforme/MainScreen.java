@@ -1,4 +1,4 @@
-package com.example.johannes.myapplication2;
+package com.example.johannes.speakforme;
 
 import android.content.Context;
 import android.content.Intent;
@@ -17,14 +17,11 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Locale;
 
 class SentencesAdapter extends ArrayAdapter<String> {
@@ -53,9 +50,7 @@ class SentencesAdapter extends ArrayAdapter<String> {
     }
 }
 
-public class MyActivity extends AppCompatActivity {
-
-    public final static String EXTRA_MESSAGE = "com.example.johannes.myapplication2.MESSAGE";
+public class MainScreen extends AppCompatActivity {
 
     SentencesAdapter adapter;
     TextToSpeech tts;
@@ -86,7 +81,7 @@ public class MyActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my);
 
         adapter = new SentencesAdapter(this);
-        readData();
+        loadSavedSentences();
 
         ListView listview = (ListView) findViewById(R.id.message_list);
         listview.setAdapter(adapter);
@@ -124,7 +119,7 @@ public class MyActivity extends AppCompatActivity {
         tts.speak(message, TextToSpeech.QUEUE_ADD, null);
     }
 
-    public void speakMessage(View view) {
+    public void speakMessageFromTextentry(View view) {
         EditText editText = (EditText) findViewById(R.id.edit_message);
         speak(editText.getText().toString());
     }
@@ -141,7 +136,8 @@ public class MyActivity extends AppCompatActivity {
         adapter.remove(message);
     }
 
-    void readData() {
+    void loadSavedSentences() {
+        // Loads saved sentences and adds them to the list at the main screen
 
         File f = new File(this.getFilesDir(), getString(R.string.user_sentences_file));
 
@@ -157,7 +153,7 @@ public class MyActivity extends AppCompatActivity {
         }
     }
 
-    void saveData() {
+    void saveUserSentences() {
 
         File file = new File(this.getFilesDir(), getString(R.string.user_sentences_file));
 
@@ -175,7 +171,7 @@ public class MyActivity extends AppCompatActivity {
 
     public void onStop() {
         super.onStop();
-        saveData();
+        saveUserSentences();
     }
 
     public void onDestroy() {
